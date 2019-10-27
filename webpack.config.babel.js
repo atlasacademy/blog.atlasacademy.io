@@ -1,5 +1,6 @@
-const BrotliPlugin = require('brotli-webpack-plugin');
+// const BrotliPlugin = require('brotli-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const path = require('path');
 
 module.exports = {
@@ -17,23 +18,27 @@ module.exports = {
             },
             {
                 test: /\.(scss)$/,
-                use: [{
-                    loader: 'style-loader', // inject CSS to page
-                }, {
-                    loader: 'css-loader', // translates CSS into CommonJS modules
-                }, {
-                    loader: 'postcss-loader', // Run post css actions
-                    options: {
-                        plugins: function () { // post css plugins, can be exported to postcss.config.js
-                            return [
-                                require('precss'),
-                                require('autoprefixer')
-                            ];
-                        }
-                    }
-                }, {
-                    loader: 'sass-loader' // compiles Sass to CSS
-                }]
+                use: [
+                    {
+                        loader: MiniCssExtractPlugin.loader,
+                        options: {
+                            hmr: process.env.NODE_ENV === 'development',
+                        },
+                    },
+                    // {
+                    //     loader: 'postcss-loader', // Run post css actions
+                    //     options: {
+                    //         plugins: function () { // post css plugins, can be exported to postcss.config.js
+                    //             return [
+                    //                 require('precss'),
+                    //                 require('autoprefixer')
+                    //             ];
+                    //         }
+                    //     }
+                    // },
+                    'css-loader',
+                    'sass-loader',
+                ]
             }
         ]
     },
@@ -43,14 +48,15 @@ module.exports = {
         publicPath: '/'
     },
     plugins: [
+        new MiniCssExtractPlugin({
+            // Options similar to the same options in webpackOptions.output
+            // all options are optional
+            filename: 'style.css',
+            chunkFilename: '[name].css',
+            ignoreOrder: false, // Enable to remove warnings about conflicting order
+        }),
         new HtmlWebpackPlugin({
             template: './src/index.html',
-        }),
-        new BrotliPlugin({
-            asset: '[path].br[query]',
-            test: /\.(js|css|html|svg)$/,
-            threshold: 10240,
-            minRatio: 0.8
         })
     ]
 };

@@ -1,4 +1,4 @@
-import BaseExtension from "./baseExtension";
+import BaseExtension from "../baseExtension";
 
 export default class PartyStartExtension extends BaseExtension {
 
@@ -9,7 +9,7 @@ export default class PartyStartExtension extends BaseExtension {
             keyword: 'party-start',
             hasParameters: false,
             replacer: () => {
-                return '<div class="fgo-party">';
+                return '<div class="fgo-party"><div class="content">';
             },
             showTutorial: false,
         });

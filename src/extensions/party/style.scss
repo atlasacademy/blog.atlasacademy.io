@@ -1,0 +1,58 @@
+$party-servant-height: 466;
+$party-ce-height: 127;
+$party-slot-width: 277;
+$party-servant-ratio: 100% * ($party-servant-height / ($party-slot-width * 6));
+$party-ce-ratio: 100% * ($party-ce-height / ($party-slot-width * 6));
+$party-full-width-ratio: 100% * (($party-servant-height + $party-ce-height) / ($party-slot-width * 6));
+
+.fgo-party {
+  height: 0;
+  margin-bottom: 1rem;
+  padding-top: $party-full-width-ratio;
+  position: relative;
+  width: 100%;
+
+  &>.content {
+    align-content: center;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+
+    .party-servant {
+      //border: 1px solid black;
+      height: 0;
+      overflow: hidden;
+      padding-top: $party-servant-ratio;
+      position: relative;
+      width: (100% / 6);
+
+      &>img {
+        position: absolute;
+        left: -(100% * 2 / 3);
+        top: -5%;
+        width: 300%;
+      }
+    }
+
+    .party-ce {
+      //border: 1px solid black;
+      height: 0;
+      overflow: hidden;
+      padding-top: $party-ce-ratio;
+      position: relative;
+      width: (100% / 6);
+
+      &>img {
+        position: absolute;
+        left: 0;
+        top: -(100% / 3);
+        width: 100%;
+      }
+    }
+  }
+}

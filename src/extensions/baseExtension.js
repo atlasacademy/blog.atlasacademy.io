@@ -58,8 +58,6 @@ export default class BaseExtension {
             + (this.settings.hasParameters ? parameterRegex : '')
             + escapeStringRegexp(this.settings.endSequence);
 
-        console.log(regex);
-
         return new RegExp(regex, 'g');
     }
 
